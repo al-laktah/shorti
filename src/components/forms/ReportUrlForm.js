@@ -30,7 +30,7 @@ function ReportUrlForm() {
             required
             id="maliciousUrl"
             ref={maliciousUrlInputRef}
-            placeholder="shorti.xyz/abc123"
+            placeholder={`${window.location.host}/abc123`}
           />
         </div>
         <div className={classes.control}>
@@ -38,7 +38,7 @@ function ReportUrlForm() {
           <textarea
             className={classes.textarea}
             required
-            id="Comment"
+            id="comment"
             ref={commentInputRef}
             rows="5"
           ></textarea>

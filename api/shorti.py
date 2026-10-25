@@ -3,15 +3,17 @@ from cors import _corsify_actual_response as car
 from flask import Flask, jsonify, redirect, request
 from shortner import shorten, valid
 from flask_cors import CORS
-from db import get_url, get_clicks, exists
+from db import get_url, get_clicks, exists, init
+from config import SHORTI_DOMAIN
 
 app = Flask(__name__)
 cors = CORS(app)
+init()
 
 
 @app.route('/')
 def landing():
-    return redirect('http://shorti.xyz')
+    return redirect('http://' + SHORTI_DOMAIN)
 
 
 @app.route('/api/shortener/', methods=['POST', 'OPTIONS'])
@@ -59,10 +61,8 @@ def clicks():
         if not shortidata:
             return car(jsonify('invalid-data-format')), 400
         elif valid(shortidata['shorti']):
-            shorti = shortidata['shorti']
-            if '://' in shorti:
-                http, shorti = shorti.split('://')
-            padding, shorti = shorti.split('/')
+            # last part of the path, works for any domain and trailing slashes
+            shorti = shortidata['shorti'].rstrip('/').split('/')[-1]
         else:
             return car(jsonify('invalid-url')), 400
 

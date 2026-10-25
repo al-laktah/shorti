@@ -17,7 +17,6 @@ function ClickCounterCard(props) {
           Your Shorti URL Was Clicked:
         </h1>
         <h1
-          className={classes}
           style={{
             display: "flex",
             justifyContent: "center",

@@ -21,7 +21,7 @@ function NumberOfClicks(props) {
           required
           id="shorti-url"
           ref={shortiInputRef}
-          placeholder="shorti.xyz/abc123"
+          placeholder={`${window.location.host}/abc123`}
         />
       </div>
       <div className={classes.actions}>

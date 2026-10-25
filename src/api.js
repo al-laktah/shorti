@@ -1,6 +1,7 @@
 function SERVER_ENDPOINT() {
-  //return "http://localhost:5000/";
-  return "https://www.shorti.xyz/"
+  // The API is served from the same domain as the frontend, under /api/.
+  // During development "proxy" in package.json forwards it to Flask.
+  return "/";
 }
 
 export default SERVER_ENDPOINT;

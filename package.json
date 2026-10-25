@@ -1,5 +1,5 @@
 {
-  "name": "react-andy",
+  "name": "shorti",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -19,14 +19,15 @@
     "yarn": "^1.22.15"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "start-api": "cd api && venv/scripts/flask run --no-debugger",
-    "build": "react-scripts build",
+    "start": "react-scripts --openssl-legacy-provider start",
+    "start-api": "cd api && venv/bin/flask run --no-debugger",
+    "build": "react-scripts --openssl-legacy-provider build",
     "deploy": "serve -s build",
-    "test": "react-scripts test",
-    "test-api": "cd api && venv/scripts/flask test",
+    "test": "react-scripts --openssl-legacy-provider test",
+    "test-api": "cd api && venv/bin/flask test",
     "eject": "react-scripts eject"
   },
+  "proxy": "http://localhost:4444",
   "eslintConfig": {
     "extends": [
       "react-app",

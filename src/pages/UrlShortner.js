@@ -19,7 +19,6 @@ function UrlShortner() {
       .then((response) => {
         DisplayCardHandler();
         setData(response.data);
-        console.log(data);
       })
       .catch((_e) => {
         DisplayErorrHandler();
@@ -45,7 +44,7 @@ function UrlShortner() {
                 alignItems: "center",
               }}
             >
-              URL Shortner
+              URL Shortener
             </h1>
             <UrlShortnerForm onShortenUrl={ShortenUrlHandler} />
           </section>

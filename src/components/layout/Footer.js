@@ -23,7 +23,7 @@ function Footer() {
             <Link to="/Privacy">Privacy</Link>
           </li>
         </ul>
-        <div>© 2022 Shorti.xyz - Tool to shorten long URLs.</div>
+        <div>© 2022 Shorti - Tool to shorten long URLs.</div>
         <div>Made with <span className={classes.heart}>&#10084;</span> in Amman</div>
       </div>
     </footer>

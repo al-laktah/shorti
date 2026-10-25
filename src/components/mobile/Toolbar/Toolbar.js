@@ -12,7 +12,7 @@ function Toolbar(props) {
           <DrawerToggleButton click={props.drawerClickHandler}/>
         </div>
         <div className={classes.toolbar_logo}>
-          <Link to="/">Shorti.xyz</Link>
+          <Link to="/">Shorti</Link>
         </div>
       </nav>
     </header>

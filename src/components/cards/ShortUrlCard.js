@@ -16,7 +16,6 @@ function ShortUrlCard(props) {
           Your Shorti URL :
         </h1>
         <h1
-          className={classes}
           style={{
             display: "flex",
             justifyContent: "center",

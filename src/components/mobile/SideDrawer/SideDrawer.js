@@ -7,7 +7,7 @@ function SideDrawer(props) {
     <nav className={classes.side_drawer + ' ' + (props.show && classes.open)}>
       <ul>
         <li>
-          <Link to="/">URL Shortner</Link>
+          <Link to="/">URL Shortener</Link>
         </li>
         <li>
           <Link to="/ClickTracker">URL Click Tracker</Link>

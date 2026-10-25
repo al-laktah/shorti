@@ -6,12 +6,12 @@ function MainNavigation() {
   return (
     <header className={classes.header}>
       <div className={classes.logo}>
-        <Link to="/">Shorti.xyz</Link>
+        <Link to="/">Shorti</Link>
       </div>
       <nav className={classes.link}>
         <ul>
           <li>
-            <Link to="/">URL Shortner</Link>
+            <Link to="/">URL Shortener</Link>
           </li>
           <li>
             <Link to="/ClickTracker">URL Click Tracker</Link>
