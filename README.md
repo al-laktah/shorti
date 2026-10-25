@@ -35,21 +35,26 @@ yarn start
 
 ## Changing the domain:
 
-The domain short URLs are generated under is set in one place, [`api/config.py`](api/config.py).
-It can also be overridden with the `SHORTI_DOMAIN` environment variable without touching the code:
-
-```sh
-SHORTI_DOMAIN=localhost:3000 yarn start-api
-```
-
 The frontend has no domain baked in, it talks to the API on whatever domain it is served from.
+The domain short URLs are generated under comes from the `SHORTI_DOMAIN` environment variable:
+
+- With Docker: put `SHORTI_DOMAIN=example.com` in a `.env` file next to `docker-compose.yml` and run `docker compose up -d`. Caddy gets a certificate for the new domain by itself.
+- Running locally: `SHORTI_DOMAIN=localhost:3000 yarn start-api`, without it the default from [`api/config.py`](api/config.py) is used.
 
 ## Deployment:
 
-Both parts are served from the same domain:
+Everything runs with Docker Compose. [Caddy](https://caddyserver.com) serves the frontend, forwards `/api/` to the Flask app and takes care of HTTPS.
+Point the domain's DNS at the server, make sure ports 80 and 443 are open, then run:
 
-- `/api/` goes to the Flask app (`cd api && venv/bin/python shorti.py`, listens on port 4444)
-- everything else goes to the frontend build (`docker build -t shorti . && docker run -p 5000:5000 shorti`, or `yarn build && yarn deploy`), which also handles the short URLs themselves
+```sh
+docker compose up -d --build
+```
+
+Run the same command again after pulling new changes. The links are kept in the `shorti-data` volume, a copy of the database can be taken with:
+
+```sh
+docker compose cp api:/data/andy.db ./andy.db
+```
 
 ## Todo:
   ### `-Migrate DB from Sqlite`

@@ -1,16 +1,18 @@
-FROM node:24-alpine
+FROM node:24-alpine AS build
 
 WORKDIR /app
 
 COPY package*.json yarn.lock ./
 
-RUN yarn install --frozen-lockfile && yarn global add serve
+RUN yarn install --frozen-lockfile
 
 COPY . .
 
 RUN yarn build
 
-EXPOSE 5000
 
+FROM caddy:2-alpine
 
-CMD ["serve", "-s", "build", "-l", "5000"]
+COPY Caddyfile /etc/caddy/Caddyfile
+
+COPY --from=build /app/build /srv

@@ -1,0 +1,30 @@
+# The domain everything runs under, override it with SHORTI_DOMAIN in a .env file next to this one
+x-domain: &domain
+  SHORTI_DOMAIN: ${SHORTI_DOMAIN:-shorti.al-laktah.com}
+
+services:
+  web:
+    build: .
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    environment: *domain
+    volumes:
+      - caddy-data:/data
+      - caddy-config:/config
+    depends_on:
+      - api
+
+  api:
+    build: ./api
+    restart: unless-stopped
+    environment: *domain
+    volumes:
+      - shorti-data:/data
+
+volumes:
+  caddy-data:
+  caddy-config:
+  shorti-data:

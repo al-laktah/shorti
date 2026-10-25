@@ -1,0 +1,18 @@
+# Serves the frontend and forwards /api/ to the Flask app.
+# Caddy gets and renews the HTTPS certificate for the domain by itself.
+{$SHORTI_DOMAIN} {
+	encode zstd gzip
+
+	handle /api/* {
+		reverse_proxy api:4444
+	}
+
+	handle {
+		root * /srv
+		# file names are hashed, so these never change
+		header /static/* Cache-Control "public, max-age=31536000, immutable"
+		# short URLs and the app pages are handled by the React router
+		try_files {path} /index.html
+		file_server
+	}
+}
