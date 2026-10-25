@@ -1,30 +1,32 @@
-# The domain everything runs under, override it with SHORTI_DOMAIN in a .env file next to this one
-x-domain: &domain
-  SHORTI_DOMAIN: ${SHORTI_DOMAIN:-shorti.al-laktah.com}
-
+# Runs behind the server's shared Caddy proxy, which reaches the frontend as "shorti" on the "web" network
 services:
   web:
     build: .
     restart: unless-stopped
-    ports:
-      - "80:80"
-      - "443:443"
-      - "443:443/udp"
-    environment: *domain
-    volumes:
-      - caddy-data:/data
-      - caddy-config:/config
+    networks:
+      default:
+      web:
+        aliases:
+          - shorti
     depends_on:
       - api
 
   api:
     build: ./api
     restart: unless-stopped
-    environment: *domain
+    environment:
+      # override it with SHORTI_DOMAIN in a .env file next to this one
+      SHORTI_DOMAIN: ${SHORTI_DOMAIN:-shorti.al-laktah.com}
+    networks:
+      default:
+        aliases:
+          - shorti-api
     volumes:
       - shorti-data:/data
 
+networks:
+  web:
+    external: true
+
 volumes:
-  caddy-data:
-  caddy-config:
   shorti-data:

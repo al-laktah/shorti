@@ -1,10 +1,10 @@
 # Serves the frontend and forwards /api/ to the Flask app.
-# Caddy gets and renews the HTTPS certificate for the domain by itself.
-{$SHORTI_DOMAIN} {
+# It runs behind the server's shared Caddy proxy, which takes care of HTTPS.
+:80 {
 	encode zstd gzip
 
 	handle /api/* {
-		reverse_proxy api:4444
+		reverse_proxy shorti-api:4444
 	}
 
 	handle {

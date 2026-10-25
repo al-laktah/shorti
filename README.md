@@ -38,13 +38,22 @@ yarn start
 The frontend has no domain baked in, it talks to the API on whatever domain it is served from.
 The domain short URLs are generated under comes from the `SHORTI_DOMAIN` environment variable:
 
-- With Docker: put `SHORTI_DOMAIN=example.com` in a `.env` file next to `docker-compose.yml` and run `docker compose up -d`. Caddy gets a certificate for the new domain by itself.
+- With Docker: put `SHORTI_DOMAIN=example.com` in a `.env` file next to `docker-compose.yml`, run `docker compose up -d` and change the domain in the proxy's site block (see below).
 - Running locally: `SHORTI_DOMAIN=localhost:3000 yarn start-api`, without it the default from [`api/config.py`](api/config.py) is used.
 
 ## Deployment:
 
-Everything runs with Docker Compose. [Caddy](https://caddyserver.com) serves the frontend, forwards `/api/` to the Flask app and takes care of HTTPS.
-Point the domain's DNS at the server, make sure ports 80 and 443 are open, then run:
+Shorti runs with Docker Compose behind a shared [Caddy](https://caddyserver.com) proxy that takes care of HTTPS, so other services can run on the same server.
+Inside, a second Caddy serves the frontend and forwards `/api/` to the Flask app.
+The proxy has to be on a Docker network called `web` and send the domain to `shorti:80`:
+
+```
+shorti.al-laktah.com {
+	reverse_proxy shorti:80
+}
+```
+
+Then, with the domain's DNS pointing at the server, run:
 
 ```sh
 docker compose up -d --build

@@ -8,7 +8,7 @@ function Footer() {
       <div>
         <ul>
           <li>
-            <a href="https://github.com/meesyice/shorti" target="_blank" rel="noopener noreferrer">Source</a>
+            <a href="https://github.com/al-laktah/shorti" target="_blank" rel="noopener noreferrer">Source</a>
           </li>
           <li>|</li>
           <li>
