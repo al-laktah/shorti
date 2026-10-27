@@ -1,7 +1,7 @@
 import Card from "./Card";
 import classes from "./Cards.module.css";
 
-function InvalidUrlCard() {
+function InvalidUrlCard({ message = "The URL is not valid" }) {
   return (
     <Card>
       <section className={classes.Card}>
@@ -13,7 +13,7 @@ function InvalidUrlCard() {
             alignItems: "center",
           }}
         >
-          The URL is not valid
+          {message}
         </h1>
       </section>
     </Card>

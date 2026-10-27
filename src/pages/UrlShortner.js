@@ -11,6 +11,7 @@ function UrlShortner() {
   const [data, setData] = useState("");
   const [cardIsShown, setCardIsShown] = useState(false);
   const [erorrIsShown, setErorrIsShown] = useState(false);
+  const [errorMessage, setErrorMessage] = useState();
 
   function ShortenUrlHandler(urlShortnerData) {
     const payload = JSON.stringify(urlShortnerData);
@@ -20,11 +21,17 @@ function UrlShortner() {
         DisplayCardHandler();
         setData(response.data);
       })
-      .catch((_e) => {
-        DisplayErorrHandler();
+      .catch((e) => {
+        // The proxy in front of shorti answers 403 when creating links isn't open to this visitor.
+        DisplayErorrHandler(
+          e.response && e.response.status === 403
+            ? "Creating links is for members only. Shared links work for everyone."
+            : undefined
+        );
       });
   }
-  function DisplayErorrHandler() {
+  function DisplayErorrHandler(message) {
+    setErrorMessage(message);
     setCardIsShown(false);
     setErorrIsShown(true);
   }
@@ -50,7 +57,7 @@ function UrlShortner() {
           </section>
         </Card>
         {cardIsShown && <ShortUrlCard shorti={data} />}
-        {erorrIsShown && <InvalidUrlCard />}
+        {erorrIsShown && <InvalidUrlCard message={errorMessage} />}
       </div>
   );
 }
